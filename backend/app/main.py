@@ -1,17 +1,12 @@
 from fastapi import FastAPI
+from app.routers.products import router as products_router
 
 app = FastAPI()
 
-@app.get("/")
-def root():
-    return{
-        "message": "hello ai Enginear!"
-    }
-    
-@app.get("/users/{user_id}")
-def get_user(user_id: int):
-    
-    return{
-        "id": user_id,
-        "name": "taro",
+app.include_router(products_router)
+
+@app.get("/health")
+def health_check():
+    return {
+        "status": "ok"
     }
