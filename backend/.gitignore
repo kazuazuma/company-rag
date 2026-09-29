@@ -1,0 +1,9 @@
+.venv/
+__pychache__
+.env
+.pytest_cache/
+node_modules/
+dist/
+.DS_Store
+.vccode/
+.idea/
