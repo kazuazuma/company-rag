@@ -1,40 +1,53 @@
-products = {
-    1: {
-        "id": 1,
-        "name": "keyboard",
-        "price": 5000,
-    },
-    2: {
-        "id": 2,
-        "name": "mouse",
-        "price": 3000,
-    },
-}
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
-def find_all():
-    
-    return list(products.values())
-    
-def find_by_id(product_id: int):
-    
-    return products.get(product_id)
+from app.models.product import Product
 
-def save(product: dict):
+def find_all(db: Session):
     
-    products[product["id"]] = product
+    statement = select(Product)
+    
+    return db.scalars(statement).all()
+    
+def find_by_id(
+    db: Session,
+    product_id: int,
+):
+    return db.get(Product, product_id)
+    
+def save(
+    db: Session,
+    product: Product,
+):
+    try:
+        db.add(product)
+        
+        db.commit()
+        
+        db.refresh(product)
+    
+        return product
+    
+    except Exception:
+        
+        db.rollback()
+        
+        raise
+    
+def update(
+    db: Session,
+    product: Product,
+):
+    db.commit()
+    db.refresh(product)
     
     return product
-
-def count():
     
-    return len(products)
+def delete(
+    db: Session,
+    product: Product,
+):
 
-def update(product_id: int, product: dict):
-    products[product_id] = product
-    return product
+    db.delete(product)
+    db.commit()
 
-def delete(product_id: int):
-
-    deleted_product = products.pop(product_id)
-
-    return deleted_product
