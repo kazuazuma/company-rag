@@ -7,6 +7,7 @@ from alembic import context
 
 from app.database import Base
 from app.models.product import Product
+from app.models.document import Document
 
 from app.core.config import settings
 
