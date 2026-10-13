@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.schemas.rag import RAGRequest
 from rag.rag_service import generate_answer
+from app.services.rag_graph import ask_rag
 
 router = APIRouter(
     prefix="/rag",
@@ -13,12 +14,10 @@ router = APIRouter(
 @router.post("/ask")
 def ask_question(
     request: RAGRequest,
-    db: Session = Depends(get_db),
 ):
     
     try:
-        return generate_answer(
-            db=db,
+        return ask_rag(
             question=request.question,
         )
     
