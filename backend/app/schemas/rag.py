@@ -4,5 +4,5 @@ class RAGRequest(BaseModel):
     
     question: str = Field(
         min_length=1,
-        max_length=2000,
+        description="質問文",
     )

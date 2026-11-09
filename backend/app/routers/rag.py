@@ -1,9 +1,6 @@
-from fastapi import APIRouter, HTTPException, Depends
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, HTTPException
 
-from app.database import get_db
 from app.schemas.rag import RAGRequest
-from rag.rag_service import generate_answer
 from app.services.rag_graph import ask_rag
 
 router = APIRouter(
